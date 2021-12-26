@@ -49,7 +49,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
     s.src = "https://client.crisp.chat/l.js"
     // @ts-ignore
     s.async = 1
-    d.getElementsByTagName("head")[0].appendChild(s)
+    d.getElementsByTagName("head")[0]?.appendChild(s)
   }, [])
 
   return (

@@ -82,7 +82,7 @@ const GridComponentWithQuery = ({ toggle, orderBy }) => {
     gap?: string
   }
   let sx: SX = { columnCount: [1, 2, 2, 4], columnGap: "1.5rem" }
-  if (listingPages[0].count <= 4) {
+  if (listingPages[0] && listingPages[0].count <= 4) {
     sx = { display: ["block", "grid"], gridTemplateColumns: "repeat(4, 1fr)", gap: "1.5rem" }
   }
 
