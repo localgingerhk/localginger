@@ -1,14 +1,27 @@
-import { Head, BlitzLayout } from "blitz"
+import { ReactNode } from "react"
+import { Head } from "blitz"
+import Navbar from "app/core/components/Navbar"
+import Footer from "app/core/components/Footer"
 
-const Layout: BlitzLayout<{title?: string}> = ({ title, children }) => {
+type LayoutProps = {
+  title?: string
+  children: ReactNode
+}
+
+const Layout = ({ title, children }: LayoutProps) => {
   return (
     <>
       <Head>
-        <title>{title || "localginger"}</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>
+          {title
+            ? `${title} | hyperlocal.sg`
+            : "hyperlocal.sg - Awesome stuff made by Singaporeans"}
+        </title>
+        <link rel="icon" href="/favicon.png" />
       </Head>
-
+      <Navbar />
       {children}
+      <Footer />
     </>
   )
 }
