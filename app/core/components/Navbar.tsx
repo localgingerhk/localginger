@@ -17,7 +17,7 @@ const Navbar = () => {
                 <Avatar
                   size={"sm"}
                   src={"/logo_only.webp"}
-                  name="hyperlocal.sg icon"
+                  name="localginger.hk icon"
                   loading="lazy"
                 />
               </a>

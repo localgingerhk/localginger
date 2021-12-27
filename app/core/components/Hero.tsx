@@ -45,9 +45,9 @@ const Hero = () => {
                 zIndex: -1,
               }}
             >
-              hyperlocal.sg
+              localginger.hk
             </Text>{" "}
-            is a listing of apps, services, products and communities made by Singaporeans. Discover
+            is a listing of apps, services, products and communities made by Hong Kongers. Discover
             something new today while you <code>#supportlocal</code>!
           </Text>
         </Stack>
