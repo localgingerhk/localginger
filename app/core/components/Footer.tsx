@@ -57,7 +57,7 @@ const Footer = () => {
                   src={"/logo_word.png"}
                   width={200}
                   height={23}
-                  alt="hyperlocal word logo"
+                  alt="localginger word logo"
                 />
                 <Image
                   src={"/singapore.svg"}
@@ -79,7 +79,7 @@ const Footer = () => {
             </Box>
             <Stack direction={"row"} spacing={6}>
               <Link
-                href="https://github.com/abuuzayr/hyperlocal"
+                href="https://github.com/localgingerhk/localginger"
                 target="_blank"
                 rel="nofollow noopener"
               >
@@ -98,8 +98,8 @@ const Footer = () => {
                   try {
                     // @ts-ignore
                     navigator.share({
-                      title: "hyperlocal.sg - Awesome stuff made by Singaporeans",
-                      url: "https://hyperlocal.sg",
+                      title: "localginger.hk - Awesome stuff made by Singaporeans",
+                      url: "https://localginger.hk",
                     })
                   } catch (e) {}
                 }}
@@ -149,14 +149,14 @@ const Footer = () => {
             </Button>
             <Link
               target="_blank"
-              href={"https://github.com/abuuzayr/hyperlocal/issues"}
+              href={"https://github.com/localgingerhk/localginger/issues"}
               rel="nofollow noopener"
             >
               Issues
             </Link>
             <Link
               target="_blank"
-              href={"https://github.com/abuuzayr/hyperlocal"}
+              href={"https://github.com/localgingerhk/localginger"}
               rel="nofollow noopener"
             >
               Contribute
@@ -199,25 +199,25 @@ const Footer = () => {
               </Link>{" "}
               by{" "}
               <Link
-                href="https://github.com/abuuzayr"
+                href="https://github.com/localgingerhk"
                 textDecor="underline"
                 target="_blank"
                 rel="nofollow noopener"
               >
-                @abuuzayr
+                @localginger
               </Link>{" "}
-              © {new Date().getFullYear()} hyperlocal.sg
+              © {new Date().getFullYear()} localginger.hk
             </Text>
             <Text fontSize={"xs"} mt={3}>
               Looking for a <Icon as={BiCodeAlt} boxSize={5} color="blue.500" d={"inline-block"} />{" "}
-              tech job? Check out{" "}
+              job in HK? Check out{" "}
               <Link
-                href="https://techjobs.sg"
+                href="https://jobs.localginger.hk"
                 textDecor="underline"
                 target="_blank"
                 rel="nofollow noopener"
               >
-                techjobs.sg
+                Localginger Jobs
               </Link>
             </Text>
           </Stack>

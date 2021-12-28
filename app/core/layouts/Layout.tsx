@@ -14,8 +14,8 @@ const Layout = ({ title, children }: LayoutProps) => {
       <Head>
         <title>
           {title
-            ? `${title} | hyperlocal.sg`
-            : "hyperlocal.sg - Awesome stuff made by Singaporeans"}
+            ? `${title} | localginger.hk`
+            : "localginger.hk - Awesome stuff made by Hong Kongers"}
         </title>
         <link rel="icon" href="/favicon.png" />
       </Head>

@@ -55,11 +55,11 @@ export default function App({ Component, pageProps, router }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Head>
-        <title>hyperlocal.sg - Awesome stuff made by Singaporeans</title>
+        <title>localginger.hk - Awesome stuff made by Singaporeans</title>
         <meta
           name={"description"}
           content={
-            "hyperlocal.sg - Awesome apps, services, products and communities made by Singaporeans"
+            "localginger.hk - Awesome apps, services, products and communities made by Singaporeans"
           }
         />
         <meta
@@ -83,10 +83,10 @@ export default function App({ Component, pageProps, router }: AppProps) {
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
-        <meta name="application-name" content="hyperlocal.sg" />
+        <meta name="application-name" content="localginger.hk" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="hyperlocal.sg" />
+        <meta name="apple-mobile-web-app-title" content="localginger.hk" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
@@ -99,23 +99,23 @@ export default function App({ Component, pageProps, router }: AppProps) {
         <link rel="shortcut icon" href="/favicon.png" />
 
         <meta name="twitter:card" content="summary" />
-        <meta name="twitter:url" content="https://hyperlocal.sg" />
-        <meta name="twitter:title" content="hyperlocal.sg" />
+        <meta name="twitter:url" content="https://localginger.hk" />
+        <meta name="twitter:title" content="localginger.hk" />
         <meta
           name="twitter:description"
           content="Awesome apps, services, products and communities made by Singaporeans"
         />
-        <meta name="twitter:image" content="https://hyperlocal.sg/social.png" />
+        <meta name="twitter:image" content="https://localginger.hk/social.png" />
         <meta name="twitter:creator" content="@DavidWShadow" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="hyperlocal.sg" />
+        <meta property="og:title" content="localginger.hk" />
         <meta
           property="og:description"
           content="Awesome apps, services, products and communities made by Singaporeans"
         />
-        <meta property="og:site_name" content="hyperlocal.sg" />
-        <meta property="og:url" content="https://hyperlocal.sg" />
-        <meta property="og:image" content="https://hyperlocal.sg/social.png" />
+        <meta property="og:site_name" content="localginger.hk" />
+        <meta property="og:url" content="https://localginger.hk" />
+        <meta property="og:image" content="https://localginger.hk/social.png" />
       </Head>
       <AnimatePresence initial={false} exitBeforeEnter>
         <MotionBox
