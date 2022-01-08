@@ -1,4 +1,4 @@
-import { Link as InternalLink, Image } from "blitz"
+import { Link as InternalLink, Image, useSession } from "blitz"
 import {
   Stack,
   Flex,
@@ -11,6 +11,27 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react"
 import { AddIcon } from "@chakra-ui/icons"
+import SuspenseWithSpinner from "app/core/components/SuspenseWithSpinner"
+
+const AddListing = () => {
+  const session = useSession()
+  return (
+    <InternalLink href={session?.userId ? "/?add=listing" : "/login"} scroll={!session?.userId}>
+      <a>
+        <Button
+          maxW={200}
+          rounded={"md"}
+          variant="outline"
+          color={"red.500"}
+          borderColor="red.500"
+          _hover={{ bg: "red.500", color: "white" }}
+        >
+          <AddIcon mr={3} /> Add a new listing
+        </Button>
+      </a>
+    </InternalLink>
+  )
+}
 
 const Section = ({ onAddOpen }) => {
   return (
@@ -19,23 +40,12 @@ const Section = ({ onAddOpen }) => {
         <Stack spacing={4} as={Container} maxW={"3xl"} textAlign={"center"} placeItems={"center"}>
           <Heading fontSize={["2xl", "3xl"]}>Know something we don&apos;t?</Heading>
           <Text color={useColorModeValue("gray.600", "gray.400")} fontSize={["md", "lg", "xl"]}>
-            Do you know of a product, service, app or community made by Singaporeans? Do share it
+            Do you know of a product, service, app or community made by Hong Kongers? Do share it
             with us by adding a listing here.
           </Text>
-          <InternalLink href="/?add=listing" scroll={false}>
-            <a>
-              <Button
-                maxW={200}
-                rounded={"md"}
-                variant="outline"
-                color={"red.500"}
-                borderColor="red.500"
-                _hover={{ bg: "red.500", color: "white" }}
-              >
-                <AddIcon mr={3} /> Add a new listing
-              </Button>
-            </a>
-          </InternalLink>
+          <SuspenseWithSpinner>
+            <AddListing />
+          </SuspenseWithSpinner>
         </Stack>
       </Box>
       <Flex w={"full"} h={300} overflow={"hidden"} position={"relative"}>
