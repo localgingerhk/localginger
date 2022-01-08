@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react"
-import { useMutation, Link as InternalLink, Image as NextImage } from "blitz"
+import { useState } from "react"
+import { useMutation, Link as InternalLink, Image as NextImage, useSession } from "blitz"
 import {
   Box,
   Center,
@@ -12,19 +12,41 @@ import {
   Badge,
   Button,
   Icon,
-  Tooltip,
   Link,
 } from "@chakra-ui/react"
-import { ExternalLinkIcon, InfoOutlineIcon, EditIcon } from "@chakra-ui/icons"
+import { ExternalLinkIcon, EditIcon } from "@chakra-ui/icons"
 import { IoShareSocialOutline } from "react-icons/io5"
 import { RiHeart2Line, RiHeart2Fill } from "react-icons/ri"
 import updateListing from "app/listings/mutations/updateListing"
+import SuspenseWithSpinner from "app/core/components/SuspenseWithSpinner"
 
 const categoryColors = {
   products: "#2ecc71",
   services: "#3498db",
   app: "#9b59b6",
   community: "#e74c3c",
+}
+
+const EditButton = ({ id, userId }) => {
+  const session = useSession()
+  if (userId === session?.userId) {
+    return (
+      <InternalLink href={`/?edit=${id}`} scroll={false}>
+        <a>
+          <EditIcon
+            h={4}
+            position="absolute"
+            bg={"transparent"}
+            left={2}
+            bottom={2}
+            p={0}
+            color="gray.500"
+          />
+        </a>
+      </InternalLink>
+    )
+  }
+  return <></>
 }
 
 const Card = (props) => {
@@ -40,12 +62,11 @@ const Card = (props) => {
     website,
     likes: originalLikes,
     id,
-    createdAt,
+    userId,
   } = props.data
   const [liked, setLiked] = useState<number[]>([])
   const [likes, setLikes] = useState<number>(originalLikes)
   const [updateListingMutation] = useMutation(updateListing)
-  const [isOwner, setIsOwner] = useState(false)
 
   const addLike = async () => {
     try {
@@ -67,24 +88,6 @@ const Card = (props) => {
       console.error(error)
     }
   }
-
-  useEffect(() => {
-    if (localStorage) {
-      if (localStorage.getItem("_liked")) {
-        setLiked(JSON.parse(localStorage.getItem("_liked") || "[]"))
-      }
-      if (localStorage.getItem("_listings")) {
-        try {
-          const owns = JSON.parse(localStorage.getItem("_listings") || "")
-          if (owns.hasOwnProperty(id) && owns[id] === new Date(createdAt).getTime()) {
-            setIsOwner(true)
-          }
-        } catch (e) {
-          console.log(e)
-        }
-      }
-    }
-  }, [])
 
   const boxBgColor = useColorModeValue("gray.100", "gray.900")
   const iconBgColor = useColorModeValue("white", "gray.700")
@@ -277,38 +280,9 @@ const Card = (props) => {
             </Link>
           )}
         </Stack>
-        <Tooltip
-          hasArrow
-          placement="left"
-          label="Issue with this listing? Chat with us!"
-          fontSize="xs"
-        >
-          <InfoOutlineIcon
-            h={15}
-            position="absolute"
-            bg={"transparent"}
-            right={2}
-            bottom={2}
-            p={0}
-            color="gray.500"
-            display={["none", "none", "inline-block"]}
-          />
-        </Tooltip>
-        {isOwner && (
-          <InternalLink href={`/?edit=${id}`} scroll={false}>
-            <a>
-              <EditIcon
-                h={4}
-                position="absolute"
-                bg={"transparent"}
-                left={2}
-                bottom={2}
-                p={0}
-                color="gray.500"
-              />
-            </a>
-          </InternalLink>
-        )}
+        <SuspenseWithSpinner>
+          <EditButton id={id} userId={userId} />
+        </SuspenseWithSpinner>
       </Box>
     </Center>
   )
