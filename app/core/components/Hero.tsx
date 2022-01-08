@@ -8,14 +8,7 @@ const Hero = () => {
       w={"full"}
       style={{ margin: "2rem 0" }}
     >
-      <Flex
-        p={8}
-        flex={1}
-        align={"center"}
-        justify={"center"}
-        paddingBottom={{ base: 0, md: 8 }}
-        marginBottom={{ base: "-2rem", md: 0 }}
-      >
+      <Flex p={8} flex={1} align={"center"} justify={"center"} paddingBottom={{ base: 0, md: 8 }}>
         <Stack spacing={6} w={"full"} maxW={"lg"}>
           <Heading
             fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
