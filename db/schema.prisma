@@ -23,6 +23,7 @@ model User {
 
   tokens   Token[]
   sessions Session[]
+  listings Listing[]
 }
 
 model Session {
@@ -73,6 +74,9 @@ model Listing {
   tags      String?
   website   String?
   social    String?
+
+  user   User? @relation(fields: [userId], references: [id])
+  userId Int?
 
   @@unique([name, category], name: "Listing_name_category_key")
 }
