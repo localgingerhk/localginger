@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { useMutation } from "blitz"
+import { useMutation, useSession } from "blitz"
 import { useToast } from "@chakra-ui/react"
 import { ListingForm, FORM_ERROR } from "app/listings/components/ListingForm"
 import createListing from "app/listings/mutations/createListing"
@@ -11,6 +11,7 @@ const Add = (props) => {
   const toast = useToast()
   const [createListingMutation] = useMutation(createListing)
   const initialRef = useRef<HTMLInputElement>(null)
+  const session = useSession()
 
   return (
     <ListingForm
@@ -35,7 +36,10 @@ const Add = (props) => {
         }
         try {
           const { namep, ...valuesWithoutHoneypot } = values
-          const newListing = await createListingMutation(valuesWithoutHoneypot)
+          const newListing = await createListingMutation({
+            ...valuesWithoutHoneypot,
+            userId: session.userId!,
+          })
           onCloseAndClear()
           toast({
             title: "Listing created.",
@@ -45,16 +49,6 @@ const Add = (props) => {
             isClosable: true,
           })
           setToggle(!toggle)
-          if (newListing && localStorage) {
-            try {
-              let ownedListings = {}
-              if (localStorage.getItem("_listings")) {
-                ownedListings = { ...JSON.parse(localStorage.getItem("_listings") || "{}") }
-              }
-              ownedListings[newListing.id] = new Date(newListing.createdAt).getTime()
-              localStorage.setItem("_listings", JSON.stringify(ownedListings))
-            } catch (e) {}
-          }
         } catch (error) {
           if (error.code === "P2002" && error.meta?.target?.includes("name")) {
             // This error comes from Prisma

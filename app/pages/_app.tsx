@@ -6,8 +6,8 @@ import {
   ErrorFallbackProps,
   useQueryErrorResetBoundary,
   Head,
+  ErrorBoundary,
 } from "blitz"
-import { ErrorBoundary } from "react-error-boundary"
 import LoginForm from "app/auth/components/LoginForm"
 import ErrorRedirectHome from "app/core/components/ErrorRedirectHome"
 import Error from "app/core/components/Error"

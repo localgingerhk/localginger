@@ -2,7 +2,12 @@ import { Flex, Heading, Image, Stack, Text } from "@chakra-ui/react"
 
 const Hero = () => {
   return (
-    <Stack minH={100} direction={{ base: "column", md: "row" }} w={"full"}>
+    <Stack
+      minH={100}
+      direction={{ base: "column", md: "row" }}
+      w={"full"}
+      style={{ margin: "2rem 0" }}
+    >
       <Flex
         p={8}
         flex={1}
@@ -19,15 +24,15 @@ const Hero = () => {
           >
             <Text as={"span"}>Awesome stuff made by us</Text>{" "}
             <Image
-              src={"/singapore.svg"}
+              src={"/hk.svg"}
               height={{ base: "30px", md: "40px" }}
-              width={{ base: "43px", md: "57.5px" }}
+              width={{ base: "45px", md: "60px" }}
               fontSize={1}
               display={"inline-block"}
               boxShadow={"dark-lg"}
               borderRadius={"md"}
               ml={4}
-              alt="Singapore flag"
+              alt="Hong Kong flag"
             />
           </Heading>
           <Text fontSize={{ base: "md", lg: "lg" }} textAlign={{ base: "center", md: "left" }}>

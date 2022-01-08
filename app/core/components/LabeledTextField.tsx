@@ -1,5 +1,5 @@
-import { forwardRef, PropsWithoutRef } from "react"
-import { useField } from "react-final-form"
+import { forwardRef, ComponentPropsWithoutRef, PropsWithoutRef } from "react"
+import { useField, UseFieldConfig } from "react-final-form"
 import { FormControl, FormLabel, Input, FormErrorMessage, FormHelperText } from "@chakra-ui/react"
 
 export interface LabeledTextFieldProps extends PropsWithoutRef<JSX.IntrinsicElements["input"]> {
@@ -12,20 +12,32 @@ export interface LabeledTextFieldProps extends PropsWithoutRef<JSX.IntrinsicElem
   /** Field type. Doesn't include radio buttons and checkboxes */
   type?: "text" | "password" | "email" | "number"
   outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>
+  labelProps?: ComponentPropsWithoutRef<"label">
+  fieldProps?: UseFieldConfig<string>
   visibility?: string
-  ref?: HTMLInputElement
 }
 
 export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldProps>(
-  ({ name, label, helperText, outerProps, visibility, ...props }, ref) => {
+  ({ name, label, helperText, outerProps, fieldProps, labelProps, visibility, ...props }, ref) => {
     const {
       input,
       meta: { touched, error, submitError, submitting },
     } = useField(name, {
-      parse: props.type === "number" ? Number : undefined,
+      parse:
+        props.type === "number"
+          ? (Number as any)
+          : // Converting `""` to `null` ensures empty values will be set to null in the DB
+            (v) => (v === "" ? null : v),
+      ...fieldProps,
     })
 
-    const normalizedError = Array.isArray(error) ? error.join(", ") : error || submitError
+    let normalizedError = error || submitError
+
+    if (Array.isArray(error)) {
+      normalizedError = error.join(", ")
+    } else if (typeof error === "object") {
+      normalizedError = Object.values(normalizedError).join(", ")
+    }
 
     let setVisibility = {}
     if (visibility === "hidden") {

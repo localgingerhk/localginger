@@ -1,8 +1,66 @@
-import { ReactNode } from "react"
-import { Link as InternalLink } from "blitz"
-import { Box, Flex, HStack, Button, Link, Avatar, IconButton, useColorMode } from "@chakra-ui/react"
-import { AddIcon } from "@chakra-ui/icons"
+import { Suspense } from "react"
+import { Link as InternalLink, useSession } from "blitz"
+import {
+  Box,
+  Flex,
+  HStack,
+  Button,
+  Link,
+  Avatar,
+  IconButton,
+  useColorMode,
+  Spinner,
+} from "@chakra-ui/react"
+import { AddIcon, LockIcon } from "@chakra-ui/icons"
 import { IoMoon, IoSunny } from "react-icons/io5"
+import { RiAccountCircleLine } from "react-icons/ri"
+
+const AuthSection = () => {
+  const session = useSession()
+  return (
+    <>
+      <Link
+        as={InternalLink}
+        href={session?.userId ? "/?add=listing" : "/login"}
+        scroll={!session?.userId}
+      >
+        <a>
+          <Button
+            variant={"solid"}
+            bg={"red.500"}
+            color={"white"}
+            size={"sm"}
+            mr={3}
+            leftIcon={session?.userId ? <AddIcon /> : <LockIcon />}
+            _hover={{
+              bg: "transparent",
+              color: "red.500",
+            }}
+          >
+            {session?.userId ? "Add" : "Login"}
+          </Button>
+        </a>
+      </Link>
+      {session?.userId && (
+        <Link as={InternalLink} href="/account">
+          <IconButton
+            colorScheme="red"
+            size={"lg"}
+            variant={"ghost"}
+            aria-label={"Go to account"}
+            icon={<RiAccountCircleLine size={24} />}
+          />
+        </Link>
+      )}
+    </>
+  )
+}
+
+const WrappedAuthSection = () => (
+  <Suspense fallback={<Spinner />}>
+    <AuthSection />
+  </Suspense>
+)
 
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -50,24 +108,7 @@ const Navbar = () => {
               </Button>
             </a>
           </Link>
-          <Link as={InternalLink} href={"/?add=listing"} scroll={false}>
-            <a>
-              <Button
-                variant={"solid"}
-                bg={"red.500"}
-                color={"white"}
-                size={"sm"}
-                mr={3}
-                leftIcon={<AddIcon />}
-                _hover={{
-                  bg: "transparent",
-                  color: "red.500",
-                }}
-              >
-                Add
-              </Button>
-            </a>
-          </Link>
+          <WrappedAuthSection />
           <IconButton
             size={"lg"}
             variant={"ghost"}
