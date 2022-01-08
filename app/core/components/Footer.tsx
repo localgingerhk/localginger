@@ -1,5 +1,5 @@
-import { ReactNode, useState, useEffect } from "react"
-import { Link as InternalLink, Image as NextImage } from "blitz"
+import { ReactNode, useState, useEffect, Suspense } from "react"
+import { Link as InternalLink, Image as NextImage, useSession, useMutation } from "blitz"
 import {
   Link,
   Box,
@@ -13,7 +13,7 @@ import {
   IconButton,
   useColorModeValue,
   Image,
-  Button,
+  Spinner,
   useToast,
 } from "@chakra-ui/react"
 import { FiGithub, FiShare2 } from "react-icons/fi"
@@ -22,6 +22,8 @@ import { BsLightningFill } from "react-icons/bs"
 import { IoStatsChart } from "react-icons/io5"
 import Alert from "app/core/components/Alert"
 import subscribe from "app/core/utils/subscribe"
+import logout from "app/auth/mutations/logout"
+import SuspenseWithSpinner from "app/core/components/SuspenseWithSpinner"
 
 const ListHeader = ({ children }: { children: ReactNode }) => {
   return (
@@ -29,6 +31,34 @@ const ListHeader = ({ children }: { children: ReactNode }) => {
       {children}
     </Text>
   )
+}
+
+const AddListing = () => {
+  const session = useSession()
+  return (
+    <InternalLink href={session?.userId ? "/?add=listing" : "/login"} scroll={!session?.userId}>
+      Add a listing
+    </InternalLink>
+  )
+}
+
+const LogInOutButton = () => {
+  const session = useSession()
+  const [logoutMutation] = useMutation(logout)
+  if (session?.userId) {
+    return (
+      <Link
+        href={"#"}
+        onClick={async () => {
+          await logoutMutation()
+        }}
+        scroll={false}
+      >
+        Logout
+      </Link>
+    )
+  }
+  return <Link href="/login">Login</Link>
 }
 
 const Footer = () => {
@@ -60,11 +90,11 @@ const Footer = () => {
                   alt="localginger word logo"
                 />
                 <Image
-                  src={"/singapore.svg"}
+                  src={"/hk.svg"}
                   height={5}
                   display={"inline-block"}
                   boxShadow="lg"
-                  alt="Singapore flag"
+                  alt="Hong Kong flag"
                   fontSize={1}
                 />
               </Stack>
@@ -123,30 +153,15 @@ const Footer = () => {
             <Link target="_blank" href={"#"}>
               Founder Stories<Text fontSize="sm"> - coming soon!</Text>
             </Link>
+            <SuspenseWithSpinner>
+              <LogInOutButton />
+            </SuspenseWithSpinner>
           </Stack>
           <Stack align={"flex-start"}>
-            <ListHeader>Support</ListHeader>
-            <InternalLink href={"/?add=listing"} scroll={false}>
-              Add a listing
-            </InternalLink>
-            <Button
-              variant="link"
-              onClick={() => setAlertText("edit")}
-              fontWeight="normal"
-              color={useColorModeValue("gray.700", "gray.200")}
-              lineHeight={6}
-            >
-              Edit a listing
-            </Button>
-            <Button
-              variant="link"
-              onClick={() => setAlertText("delete")}
-              fontWeight="normal"
-              color={useColorModeValue("gray.700", "gray.200")}
-              lineHeight={6}
-            >
-              Delete a listing
-            </Button>
+            <ListHeader>Listings</ListHeader>
+            <SuspenseWithSpinner>
+              <AddListing />
+            </SuspenseWithSpinner>
             <Link
               target="_blank"
               href={"https://github.com/localgingerhk/localginger/issues"}
