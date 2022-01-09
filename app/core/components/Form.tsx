@@ -41,7 +41,7 @@ export function Form<S extends z.ZodType<any, any>>({
           )}
 
           {submitText && (
-            <Button colorScheme="red" mr={3} type="submit" float={"left"} disabled={submitting}>
+            <Button colorScheme="red" mr={3} type="submit" width={"full"} disabled={submitting}>
               {submitText}
             </Button>
           )}
